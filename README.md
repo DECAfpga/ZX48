@@ -1,4 +1,8 @@
-# zx48 DECA port (HDMI version)
+# ZX48 DECA port (HDMI version)
+
+​				(For VGA video version see https://github.com/SoCFPGA-learning/DECA/tree/main/Projects/zx48)
+
+
 
 Adapted from ua2 port (Unamiga) https://github.com/Kyp069/zx48   
 
@@ -21,6 +25,8 @@ Important notes:
 * **If screen is black after bootup, press space + F12 to perform a hard reset**
 * **It is needed an SDcard with esxdos 0.89** (bin and sys folders)
 * Key0 is assigned as HDMI DAC reset
+
+
 
 
 
@@ -55,3 +61,4 @@ Follows original readme.md.
 <li>Toggle RGB/VGA: scroll lock</li>
 </ul>
 <p>
+
