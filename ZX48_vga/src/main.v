@@ -10,9 +10,13 @@ module main
 	input  wire       nmi,
 	output wire       map,
 
-	output wire       blank,	// video
-	output wire[ 1:0] sync,
-	output wire[23:0] rgb,
+	output wire       blank,   // video
+	output wire       hsync,
+	output wire       vsync,
+	output wire       r,
+	output wire       g,
+	output wire       b,
+	output wire       i,
 
 	input  wire       ear,     // audio
 	output wire[11:0] laudio,
@@ -185,17 +189,22 @@ wire vduCn, vduRd, vduI;
 video Video
 (
 	.clock  (clock  ),
-	.ce     (ne7M0 ),
+	.ce     (ne7M0  ),
 	.border (border ),
 	.blank  (blank  ),
-	.sync   (sync   ),
-	.rgb    (rgb    ),
-	.vb     (vduCn  ),
-	.vrd     (vduRd  ),
-	.vi     (vduI   ),
-	.vd      (vduQ     ),
-	.va      (vduA     )
+	.hsync  (hsync  ),
+	.vsync  (vsync  ),
+	.r      (r      ),
+	.g      (g      ),
+	.b      (b      ),
+	.i      (i      ),
+	.bi     (vduI   ),
+	.cn     (vduCn  ),
+	.rd     (vduRd  ),
+	.d      (vduQ   ),
+	.a      (vduA   )
 );
+
 //-------------------------------------------------------------------------------------------------
 
 audio Audio

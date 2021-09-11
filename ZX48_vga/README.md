@@ -1,35 +1,28 @@
-# ZX48 DECA port (HDMI version)
+# zx48 DECA port (VGA version)
 
-​				(For VGA video version see https://github.com/SoCFPGA-learning/DECA/tree/main/Projects/zx48)
+Adapted from ua2 port (Unamiga) https://github.com/Kyp069/zx48
 
-
-
-Adapted from ua2 port (Unamiga) https://github.com/Kyp069/zx48   
+Tested with PS2 & R2R VGA adapter (333)  https://www.waveshare.com/vga-ps2-board.htm
 
 Tested with 32 MB SDRAM board for MiSTer (extra slim) XS_2.2 ([see connections](https://github.com/SoCFPGA-learning/DECA/tree/main/Projects/sdram_mister_deca))
 
-Audio works though line out 3.5 jack connector and HDMI audio output
-
-HDMI video output.
+Audio works though line out 3.5 jack connector.
 
 Supports EAR for loading tap files though the line in jack audio connector.
 
 Joystick support (UDLR + 2 buttons)
 
-![screen](screen.jpg)
+![screen](screen.png)
 
 
 
 Important notes:
 
-* **If screen is black after bootup, press space + F12 to perform a hard reset**
+* **If it ever hangs press space + F12 to perform a hard reset**
+
 * **It is needed an SDcard with esxdos 0.89** (bin and sys folders)
-* Key0 is assigned as HDMI DAC reset
 
-
-
-
-
+VGA / HDMI file changes:  VGA and HDMI versions differ in the following files src/main.v, src/video.v, deca/zx48.qsf, deca/zx48.sv
 
 Follows original readme.md.
 
