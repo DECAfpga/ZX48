@@ -1,6 +1,6 @@
 # zx48 DECA port (VGA version)
 
-Adapted from ua2 port (Unamiga) https://github.com/Kyp069/zx48
+Adapted from ua2 and zxuno ports https://github.com/Kyp069/zx48
 
 Tested with PS2 & R2R VGA adapter (333)  https://www.waveshare.com/vga-ps2-board.htm
 
@@ -54,4 +54,3 @@ Follows original readme.md.
 <li>Toggle RGB/VGA: scroll lock</li>
 </ul>
 <p>
-

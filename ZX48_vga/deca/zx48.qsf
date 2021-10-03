@@ -117,7 +117,7 @@ set_instance_assignment -name IO_STANDARD "1.5 V SCHMITT TRIGGER" -to SW0
 # VGA 
 set_location_assignment PIN_W6 -to sync[1]
 set_location_assignment PIN_W7 -to sync[0]
-#En mis cores rgb[8:0] es r[8:6], g[5:4] y b[2:0]
+#En mis cores rgb[8:0] es r[8:6], g[5:3] y b[2:0]
 set_location_assignment PIN_AA7 -to rgb[8]
 set_location_assignment PIN_Y7 -to rgb[7]
 set_location_assignment PIN_U7 -to rgb[6]
@@ -272,6 +272,7 @@ set_location_assignment PIN_Y17 -to sdramA[0]
 set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
 set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
 set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
+
 
 
 
