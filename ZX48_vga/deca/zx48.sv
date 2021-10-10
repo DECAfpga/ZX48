@@ -1,11 +1,15 @@
-/*
-Adapted from ua2 port (Unamiga) https://github.com/Kyp069/zx48
-v1 video modified to work with VGA 333
-v2 changed to video from ZXuno port which is VGA 333
-v3 I2S Audio though DECA DAC TLV320AIC3254
-v4 EAR and Joystick support  (UDLR + 2 buttons)
-*/
-
+// ZX48 VGA for DECA by Somhic
+// Adapted from KYP's ua2 port (Unamiga) https://github.com/Kyp069/zx48 
+// v1 video modified to work with VGA 333
+// v2 changed to video from ZXuno port which is VGA 333
+// v3 I2S Audio though DECA DAC TLV320AIC3254
+// v4 EAR and Joystick support  (UDLR + 2 buttons)
+// v5.0 Revised qsf pinout. Added pinout. Sound fixes. RGB/VGA changes with Scroll lock key
+// 
+// TO DO LIST
+// - With DECA SDRAM settings (zx48 (settings-sdram).qsf) core hungs. Try clkram with phase=-1.5ns
+// - Adapt original constraints from zx48.old.sdc into zx48.sdc
+//
 
 //-------------------------------------------------------------------------------------------------
 module zx48
@@ -42,6 +46,7 @@ module zx48
 	inout  wire       keybDQ,
 
 	input  wire[ 5:0] jstick1,
+	output wire       joy_sel_o,
 
 	output wire       sdramCk,
 	output wire       sdramCe,
@@ -77,7 +82,6 @@ clock Clock (
 	.inclk0 (clock50),   // 50 MHz input
 	.areset(!reset_n),
 	.c0     (clock  ),   // 56 MHz output
-      //.c1     (       ), // 
 	.locked (locked )
 	);
 
@@ -150,6 +154,8 @@ wire[7:0] joy1 = { 2'd0, ~jstick1 };
 16 - Disparo A	jstick1[4]
 32 - Disparo B	jstick1[5]
 */
+
+assign joy_sel_o = 1'b1;
 
 wire[ 7:0] ramD;
 wire[ 7:0] ramQ = sdrQ[7:0];
@@ -268,8 +274,8 @@ assign sdramCe = 1'b1;
 //-------------------------------------------------------------------------------------------------
 
 //  I2S AUDIO 
-wire[15:0] ldata = { 1'b0, laudio, 2'b00 };
-wire[15:0] rdata = { 1'b0, raudio, 2'b00 };
+wire[15:0] ldata = { laudio, 4'b0000 };
+wire[15:0] rdata = { raudio, 4'b0000 };
 
 i2s I2S
 (
@@ -301,7 +307,16 @@ scandoubler #(.RGBW(9)) Scandoubler
 	.orgb   (orgb   )
 );
 
+
+//key BLOQ DESP changes mode from VGA to RGB. vga = 1 defalts to VGA.
 reg vga = 1'b1;
+reg scrlckd = 1'b1;
+
+always @(posedge clock) if(kstb)
+begin
+	scrlckd <= scrlck;
+	if(!scrlck && scrlckd) vga <= ~vga;
+end
 
 //-------------------------------------------------------------------------------------------------
 

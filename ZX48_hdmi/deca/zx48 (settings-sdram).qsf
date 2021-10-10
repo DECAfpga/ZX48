@@ -141,6 +141,7 @@ set_instance_assignment -name IO_STANDARD "1.5 V SCHMITT TRIGGER" -to SW0
 # ear
 set_location_assignment PIN_H4 -to ear
 
+
 # Audio CODEC TLV320AIC3254
 set_location_assignment PIN_R14 -to i2sSck
 set_instance_assignment -name IO_STANDARD "1.5 V" -to i2sSck
@@ -357,11 +358,123 @@ set_location_assignment PIN_W13 -to sdramDQM[1]
 set_location_assignment PIN_Y11 -to sdramDQM[0]
 
 
+# SDRAM set_instance_assignment
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to sdramA[12]
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to sdramA[11]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to sdramA[10]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to sdramA[9]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to sdramA[8]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to sdramA[7]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to sdramA[6]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to sdramA[5]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to sdramA[4]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to sdramA[3]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to sdramA[2]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to sdramA[1]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to sdramA[0]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to sdramDQ[15]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to sdramDQ[14]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to sdramDQ[13]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to sdramDQ[12]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to sdramDQ[11]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to sdramDQ[10]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to sdramDQ[9]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to sdramDQ[8]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to sdramDQ[7]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to sdramDQ[6]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to sdramDQ[5]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to sdramDQ[4]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to sdramDQ[3]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to sdramDQ[2]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to sdramDQ[1]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to sdramDQ[0]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to sdramBA[1]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to sdramBA[0]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to sdramDQM[1]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to sdramDQM[0]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to sdramCe
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to sdramCas
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to sdramRas
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to sdramWe
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to sdramCs
+#set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to sdramCk
+
+set_instance_assignment -name FAST_OUTPUT_ENABLE_REGISTER ON -to sdramDQ[0]
+set_instance_assignment -name FAST_OUTPUT_ENABLE_REGISTER ON -to sdramDQ[1]
+set_instance_assignment -name FAST_OUTPUT_ENABLE_REGISTER ON -to sdramDQ[2]
+set_instance_assignment -name FAST_OUTPUT_ENABLE_REGISTER ON -to sdramDQ[3]
+set_instance_assignment -name FAST_OUTPUT_ENABLE_REGISTER ON -to sdramDQ[4]
+set_instance_assignment -name FAST_OUTPUT_ENABLE_REGISTER ON -to sdramDQ[5]
+set_instance_assignment -name FAST_OUTPUT_ENABLE_REGISTER ON -to sdramDQ[6]
+set_instance_assignment -name FAST_OUTPUT_ENABLE_REGISTER ON -to sdramDQ[7]
+set_instance_assignment -name FAST_OUTPUT_ENABLE_REGISTER ON -to sdramDQ[8]
+set_instance_assignment -name FAST_OUTPUT_ENABLE_REGISTER ON -to sdramDQ[9]
+set_instance_assignment -name FAST_OUTPUT_ENABLE_REGISTER ON -to sdramDQ[10]
+set_instance_assignment -name FAST_OUTPUT_ENABLE_REGISTER ON -to sdramDQ[11]
+set_instance_assignment -name FAST_OUTPUT_ENABLE_REGISTER ON -to sdramDQ[12]
+set_instance_assignment -name FAST_OUTPUT_ENABLE_REGISTER ON -to sdramDQ[13]
+set_instance_assignment -name FAST_OUTPUT_ENABLE_REGISTER ON -to sdramDQ[14]
+set_instance_assignment -name FAST_OUTPUT_ENABLE_REGISTER ON -to sdramDQ[15]
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to sdramA[0]
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to sdramA[1]
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to sdramA[2]
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to sdramA[3]
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to sdramA[4]
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to sdramA[5]
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to sdramA[6]
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to sdramA[7]
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to sdramA[8]
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to sdramA[9]
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to sdramA[10]
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to sdramA[11]
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to sdramA[12]
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to sdramDQ[0]
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to sdramDQ[1]
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to sdramDQ[2]
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to sdramDQ[3]
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to sdramDQ[4]
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to sdramDQ[5]
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to sdramDQ[6]
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to sdramDQ[7]
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to sdramDQ[8]
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to sdramDQ[9]
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to sdramDQ[10]
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to sdramDQ[11]
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to sdramDQ[12]
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to sdramDQ[13]
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to sdramDQ[14]
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to sdramDQ[15]
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to sdramBA[0]
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to sdramBA[1]
+#set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to sdramCs
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to sdramDQM[0]
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to sdramDQM[1]
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to sdramRas
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to sdramCas
+set_instance_assignment -name FAST_OUTPUT_REGISTER ON -to sdramWe
+set_instance_assignment -name FAST_INPUT_REGISTER ON -to sdramDQ[0]
+set_instance_assignment -name FAST_INPUT_REGISTER ON -to sdramDQ[1]
+set_instance_assignment -name FAST_INPUT_REGISTER ON -to sdramDQ[2]
+set_instance_assignment -name FAST_INPUT_REGISTER ON -to sdramDQ[3]
+set_instance_assignment -name FAST_INPUT_REGISTER ON -to sdramDQ[4]
+set_instance_assignment -name FAST_INPUT_REGISTER ON -to sdramDQ[5]
+set_instance_assignment -name FAST_INPUT_REGISTER ON -to sdramDQ[6]
+set_instance_assignment -name FAST_INPUT_REGISTER ON -to sdramDQ[7]
+set_instance_assignment -name FAST_INPUT_REGISTER ON -to sdramDQ[8]
+set_instance_assignment -name FAST_INPUT_REGISTER ON -to sdramDQ[9]
+set_instance_assignment -name FAST_INPUT_REGISTER ON -to sdramDQ[10]
+set_instance_assignment -name FAST_INPUT_REGISTER ON -to sdramDQ[11]
+set_instance_assignment -name FAST_INPUT_REGISTER ON -to sdramDQ[12]
+set_instance_assignment -name FAST_INPUT_REGISTER ON -to sdramDQ[13]
+set_instance_assignment -name FAST_INPUT_REGISTER ON -to sdramDQ[14]
+set_instance_assignment -name FAST_INPUT_REGISTER ON -to sdramDQ[15]
+
 #----------------------------------------------------------------------------------
 
 set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
 set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
 set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
+
 
 
 

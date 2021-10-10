@@ -46,7 +46,11 @@ set_global_assignment -name ORIGINAL_QUARTUS_VERSION 17.1.0
 set_global_assignment -name PROJECT_CREATION_TIME_DATE "21:03:07  MAY 26, 2021"
 set_global_assignment -name LAST_QUARTUS_VERSION "17.1.0 Lite Edition"
 set_global_assignment -name PROJECT_OUTPUT_DIRECTORY output_files
+set_global_assignment -name DEVICE_FILTER_PACKAGE FBGA
+set_global_assignment -name DEVICE_FILTER_PIN_COUNT 484
+set_global_assignment -name DEVICE_FILTER_SPEED_GRADE 6
 set_global_assignment -name NUM_PARALLEL_PROCESSORS ALL
+
 set_global_assignment -name ENABLE_OCT_DONE OFF
 set_global_assignment -name EXTERNAL_FLASH_FALLBACK_ADDRESS 00000000
 set_global_assignment -name STRATIXV_CONFIGURATION_SCHEME "PASSIVE SERIAL"
@@ -58,6 +62,12 @@ set_global_assignment -name OUTPUT_IO_TIMING_NEAR_END_VMEAS "HALF VCCIO" -fall
 set_global_assignment -name OUTPUT_IO_TIMING_FAR_END_VMEAS "HALF SIGNAL SWING" -rise
 set_global_assignment -name OUTPUT_IO_TIMING_FAR_END_VMEAS "HALF SIGNAL SWING" -fall
 set_global_assignment -name SEED 1
+set_global_assignment -name GENERATE_SVF_FILE ON
+
+# disable config pin so bank8 can use 1.2V 
+set_global_assignment -name AUTO_RESTART_CONFIGURATION OFF
+set_global_assignment -name ENABLE_CONFIGURATION_PINS OFF
+set_global_assignment -name ENABLE_BOOT_SEL_PIN OFF
 
 # Project Files
 # ========================
@@ -101,23 +111,27 @@ set_global_assignment -name VERILOG_FILE rtl/audio/SPI_RAM.v
 
 # Pin & Location Assignments
 # ==========================
+
+# CLOCK
 set_location_assignment PIN_M8 -to clock50
+set_instance_assignment -name IO_STANDARD "2.5 V" -to clock50
 
-set_location_assignment PIN_C8 -to led[1]
+# LED
 set_location_assignment PIN_C7 -to led[0]
-
-# debug led 7, KEY0
+set_location_assignment PIN_C8 -to led[1]
 set_location_assignment PIN_C5 -to debugled
+set_instance_assignment -name IO_STANDARD "1.2 V" -to led[0]
+set_instance_assignment -name IO_STANDARD "1.2 V" -to led[1]
+set_instance_assignment -name IO_STANDARD "1.2 V" -to debugled
+
+# KEY, SW
 set_location_assignment PIN_H21 -to KEY0
 set_instance_assignment -name IO_STANDARD "1.5 V SCHMITT TRIGGER" -to KEY0
 set_location_assignment PIN_J21 -to SW0
 set_instance_assignment -name IO_STANDARD "1.5 V SCHMITT TRIGGER" -to SW0
 
-
 # VGA 
-set_location_assignment PIN_W6 -to sync[1]
-set_location_assignment PIN_W7 -to sync[0]
-#En mis cores rgb[8:0] es r[8:6], g[5:3] y b[2:0]
+# KYP: En mis cores rgb[8:0] es r[8:6], g[5:3] y b[2:0]
 set_location_assignment PIN_AA7 -to rgb[8]
 set_location_assignment PIN_Y7 -to rgb[7]
 set_location_assignment PIN_U7 -to rgb[6]
@@ -127,6 +141,8 @@ set_location_assignment PIN_AB7 -to rgb[3]
 set_location_assignment PIN_AB6 -to rgb[2]
 set_location_assignment PIN_AA6 -to rgb[1]
 set_location_assignment PIN_V10 -to rgb[0]
+set_location_assignment PIN_W6 -to sync[1]
+set_location_assignment PIN_W7 -to sync[0]
 
 # UDA 1334A  NOT USED W18 P8:3, BCLK Y18 P8:4,  WSEL Y19 P8:5, DIN AA17 P8:6
 #set_location_assignment PIN_W18 -to i2sMck
@@ -137,16 +153,8 @@ set_location_assignment PIN_V10 -to rgb[0]
 # ear
 set_location_assignment PIN_H4 -to ear
 
-#============================================================
+
 # Audio CODEC TLV320AIC3254
-#============================================================
-# PIN_R14  AUDIO_BCLK  i2sSck
-# PIN_P15  AUDIO_DIN_MFP1  i2sD
-# PIN_P18  AUDIO_DOUT_MFP2  ear
-# PIN_P14  AUDIO_MCLK  i2sMck
-# PIN_R15  AUDIO_WCLK  i2sLr
-#set_location_assignment PIN_P18 -to ear
-#set_instance_assignment -name IO_STANDARD "1.5 V" -to ear
 set_location_assignment PIN_R14 -to i2sSck
 set_instance_assignment -name IO_STANDARD "1.5 V" -to i2sSck
 set_location_assignment PIN_P15 -to i2sD
@@ -170,23 +178,20 @@ set_instance_assignment -name IO_STANDARD "1.5 V" -to AUDIO_SPI_SELECT
 set_location_assignment PIN_R15 -to i2sLr
 set_instance_assignment -name IO_STANDARD "1.5 V" -to i2sLr
 
-# ps2
+# Keyboard (P9:11,12 GPIO1_D0/1) 
 set_location_assignment PIN_Y6 -to keybDQ
 set_location_assignment PIN_Y5 -to keybCk
-set_location_assignment PIN_W7 -to mouseDQ
-set_location_assignment PIN_W6 -to mouseCk
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to keybDQ
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to keybCk
-set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to mouseDQ
-set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to mouseCk
 
-# joystick 1 pines 
-set_location_assignment PIN_J8 -to jstick1[5]
-set_location_assignment PIN_J9 -to jstick1[4]
-set_location_assignment PIN_J4 -to jstick1[3]
-set_location_assignment PIN_F5 -to jstick1[2]
-set_location_assignment PIN_F4 -to jstick1[1]
-set_location_assignment PIN_H3 -to jstick1[0]
+# Mouse - (P9:10,9)   (Atlas: pmod 10 mclk VT, 9 mdat GY / 1x14 right (6p) 3v3 p1, GND p4)
+set_location_assignment PIN_U6 -to mouseDQ
+set_location_assignment PIN_AA2 -to mouseCk
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to mouseCk
+#(10k resistor)set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to mouseDQ
+
+
+# JOYSTICK 
 #0 -  Nada
 #1 -  Derecha	 jstick1[0]
 #2 -  Izquierda jstick1[1]
@@ -194,18 +199,35 @@ set_location_assignment PIN_H3 -to jstick1[0]
 #8 -  Arriba	 jstick1[3]
 #16 - Disparo A jstick1[4]
 #32 - Disparo B jstick1[5]
+set_location_assignment PIN_J4 -to jstick1[5]
+set_location_assignment PIN_H3 -to jstick1[4]
+set_location_assignment PIN_J8 -to jstick1[3]
+set_location_assignment PIN_J9 -to jstick1[2]
+set_location_assignment PIN_F4 -to jstick1[1]
+set_location_assignment PIN_F5 -to jstick1[0]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to jstick1[5]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to jstick1[4]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to jstick1[3]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to jstick1[2]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to jstick1[1]
+set_instance_assignment -name IO_STANDARD "2.5 V" -to jstick1[0]
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to jstick1[5]
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to jstick1[4]
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to jstick1[3]
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to jstick1[2]
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to jstick1[1]
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to jstick1[0]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to jstick1[5]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to jstick1[4]
 set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to jstick1[3]
 set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to jstick1[2]
 set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to jstick1[1]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to jstick1[4]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to jstick1[5]
 set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to jstick1[0]
+# joystick select pin 
+set_location_assignment PIN_K5 -to joy_sel_o
+set_instance_assignment -name IO_STANDARD "2.5 V" -to joy_sel_o
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to joy_sel_o
+
 
 # SD card
 set_location_assignment PIN_T20 -to usdCk
@@ -223,18 +245,10 @@ set_instance_assignment -name IO_STANDARD "1.5 V" -to usdMiso
 set_location_assignment PIN_R20 -to usdCs
 set_instance_assignment -name IO_STANDARD "1.5 V" -to usdCs
 set_location_assignment PIN_P13 -to SD_SEL
-
+#set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SD_SEL
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to usdMiso
 
 # SDRAM
-set_location_assignment PIN_AA14 -to sdramCk
-set_location_assignment PIN_AA16 -to sdramCe
-set_location_assignment PIN_V12 -to sdramCs
-set_location_assignment PIN_AB10 -to sdramWe
-set_location_assignment PIN_W11 -to sdramRas
-set_location_assignment PIN_W12 -to sdramCas
-set_location_assignment PIN_W13 -to sdramDQM[1]
-set_location_assignment PIN_Y11 -to sdramDQM[0]
 set_location_assignment PIN_W17 -to sdramDQ[15]
 set_location_assignment PIN_V15 -to sdramDQ[14]
 set_location_assignment PIN_AB16 -to sdramDQ[13]
@@ -266,6 +280,16 @@ set_location_assignment PIN_R13 -to sdramA[3]
 set_location_assignment PIN_U15 -to sdramA[2]
 set_location_assignment PIN_W14 -to sdramA[1]
 set_location_assignment PIN_Y17 -to sdramA[0]
+set_location_assignment PIN_AA14 -to sdramCk
+set_location_assignment PIN_V12 -to sdramCs
+set_location_assignment PIN_AB10 -to sdramWe
+set_location_assignment PIN_W11 -to sdramRas
+set_location_assignment PIN_W12 -to sdramCas
+#DQMH/L & CKE not connected in Mister new SDRAM modules
+set_location_assignment PIN_AA16 -to sdramCe
+set_location_assignment PIN_W13 -to sdramDQM[1]
+set_location_assignment PIN_Y11 -to sdramDQM[0]
+
 
 #----------------------------------------------------------------------------------
 

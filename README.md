@@ -1,6 +1,6 @@
 # ZX48 DECA port
 
-Adapted from ua2 port (Unamiga) https://github.com/Kyp069/zx48
+DECA top level by Somhic adapted from Kyp's ua2 port https://github.com/Kyp069/zx48 (video part from zxuno port).
 
 See VGA or HDMI version in their respective folder.
 
@@ -38,3 +38,4 @@ Follows original readme.md.
 <li>Toggle RGB/VGA: scroll lock</li>
 </ul>
 <p>
+

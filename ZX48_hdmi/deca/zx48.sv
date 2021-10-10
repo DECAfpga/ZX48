@@ -1,13 +1,18 @@
-/*
-Adapted from ua2 port (Unamiga) https://github.com/Kyp069/zx48
-v1 video modified to work with VGA 333
-v2 changed to video from ZXuno port which is VGA 333
-v3 I2S Audio though DECA DAC TLV320AIC3254
-v4 HDMI video, EAR (changed pin and loop.hex)
-v5 HDMI audio
-v6 Joystick support  (UDLR + 2 buttons)
-*/
 
+// ZX48 HDMI for DECA by Somhic
+// Adapted from KYP's ua2 port (Unamiga) https://github.com/Kyp069/zx48
+// v1 video modified to work with VGA 333
+// v2 changed to video from ZXuno port which is VGA 333
+// v3 I2S Audio though DECA DAC TLV320AIC3254
+// v4 HDMI video, EAR (changed pin and loop.hex)
+// v5 HDMI audio
+// v6 Joystick support  (UDLR + 2 buttons)
+// v7.0 Revised qsf pinout. Added pinout. Sound fixes. 
+// 
+// TO DO LIST
+// - With DECA SDRAM settings (zx48 (settings-sdram).qsf) core hungs. Try clkram with phase=-1.5ns
+// - Adapt original constraints from zx48.old.sdc into zx48.sdc
+//
 
 //-------------------------------------------------------------------------------------------------
 module zx48
@@ -41,6 +46,7 @@ module zx48
 	inout  wire       keybDQ,
 
 	input  wire[ 5:0] jstick1,
+	output wire       joy_sel_o,
 
 	output wire       sdramCk,
 	output wire       sdramCe,
@@ -59,18 +65,18 @@ module zx48
 	output wire       usdMosi,
 
 	// HDMI-TX  DECA 
-	inout 		          		HDMI_I2C_SCL,
-	inout 		          		HDMI_I2C_SDA,
-	inout 		     [3:0]		HDMI_I2S,
-	inout 		          		HDMI_LRCLK,
-	inout 		          		HDMI_MCLK,
-	inout 		          		HDMI_SCLK,
-	output		          		HDMI_TX_CLK,
-	output		    [23:0]		HDMI_TX_D,
-	output		          		HDMI_TX_DE,    
-	output		          		HDMI_TX_HS,
-	input 		          		HDMI_TX_INT,
-	output		          		HDMI_TX_VS,
+	inout wire	   		HDMI_I2C_SCL,
+	inout wire     		HDMI_I2C_SDA,
+	inout wire [3:0]	HDMI_I2S,
+	inout wire	   		HDMI_LRCLK,
+	inout wire	   		HDMI_MCLK,
+	inout wire	   		HDMI_SCLK,
+	output wire   		HDMI_TX_CLK,
+	output wire[23:0]	HDMI_TX_D,
+	output wire	   		HDMI_TX_DE,    
+	output wire    		HDMI_TX_HS,
+	input wire     		HDMI_TX_INT,
+	output wire    		HDMI_TX_VS,
 
 	// SD DECA
 	output wire   	SD_SEL,
@@ -109,12 +115,12 @@ wire ne7M0 = power & ~cc[0] & ~cc[1] & ~cc[2];
 
 //-------------------------------------------------------------------------------------------------
 
-  // MicroSD Card 
-  assign SD_SEL = 1'b0;   //0 = 3.3V at sdcard	
-  assign SD_CMD_DIR = 1'b1;  // MOSI FPGA output	
-  assign SD_D0_DIR = 1'b0;   // MISO FPGA input	
-  assign SD_D123_DIR = 1'b1; // CS FPGA output	
-  // 
+// MicroSD Card 
+assign SD_SEL = 1'b0;   //0 = 3.3V at sdcard	
+assign SD_CMD_DIR = 1'b1;  // MOSI FPGA output	
+assign SD_D0_DIR = 1'b0;   // MISO FPGA input	
+assign SD_D123_DIR = 1'b1; // CS FPGA output	
+// 
 
 wire[7:0] code;
 wire kstb, make;
@@ -165,6 +171,7 @@ wire[7:0] joy1 = { 2'd0, ~jstick1 };
 16 - Disparo A	jstick1[4]
 32 - Disparo B	jstick1[5]
 */
+assign joy_sel_o = 1'b1;	//for megadrive 6 button joysticks
 
 wire[ 7:0] ramD;
 wire[ 7:0] ramQ = sdrQ[7:0];
@@ -279,8 +286,8 @@ assign sdramCe = 1'b1;
 //-------------------------------------------------------------------------------------------------
 
 //  I2S AUDIO 
-wire[15:0] ldata = { 1'b0, laudio, 2'b00 };
-wire[15:0] rdata = { 1'b0, raudio, 2'b00 };
+wire[15:0] ldata = { laudio, 4'b0000 };
+wire[15:0] rdata = { raudio, 4'b0000 };
 
 i2s I2S
 (
