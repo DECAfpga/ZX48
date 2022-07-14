@@ -2,6 +2,8 @@
 
 DECA top level by Somhic adapted from Kyp's ua2 port https://github.com/Kyp069/zx48.
 
+**Now compatible with [Deca Retro Cape 2](https://github.com/somhi/DECA_retro_cape_2)** (new location for 3 pins of old SDRAM modules). Otherwise see pinout below to connect everything through GPIOs.
+
 **Features:**
 
 * HDMI video output
@@ -40,7 +42,7 @@ VGA / HDMI file changes:  VGA and HDMI versions differ in the following files sr
 
 ![pinout_deca](pinout_deca.png)
 
-In this core PWM audio-l/r is not connected.
+In this core PWM audio-l/r, UART, MIDI, and VGA-R/G/B[0] are not connected.
 
 **Others:**
 
@@ -82,3 +84,4 @@ Follows original readme.md
 <li>Toggle RGB/VGA: scroll lock</li>
 </ul>
 <p>
+
